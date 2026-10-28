@@ -178,18 +178,35 @@ Estas comprobaciones corresponden a pruebas manuales realizadas durante el desar
 
 ## 11. Capturas de pantalla y evidencias
 
-En esta sección se incorporarán capturas auténticas del funcionamiento de la aplicación:
+## 11. Capturas de pantalla y evidencias
 
-1. Panel principal con los indicadores del inventario.
-2. Tabla de productos registrados.
-3. Formulario de registro de productos.
-4. Formulario de edición.
-5. Resultado de una búsqueda.
-6. Alerta de existencias bajas.
-7. Estado de un producto agotado.
-8. Pruebas de registro, edición y eliminación.
+A continuación, se presentan capturas auténticas de la aplicación web Sistema de Gestión de Inventario, desarrollada con Python, Flask, HTML, CSS y SQLite.
 
-Las imágenes se agregarán al repositorio una vez organizadas y verificadas.
+### 11.1. Panel principal
+
+El panel principal presenta un resumen de los productos registrados, las unidades disponibles, el valor total del inventario y las existencias bajas.
+
+![Panel principal del sistema](capturas/panel-principal.png)
+
+### 11.2. Gestión de productos
+
+Esta pantalla permite consultar los productos registrados, buscar por código o nombre y acceder a las opciones de edición y eliminación.
+
+![Gestión de productos](capturas/productos.png)
+
+### 11.3. Registro de productos
+
+El formulario permite introducir el código, nombre, precio unitario y cantidad inicial de un producto.
+
+![Formulario de registro de productos](capturas/registro-producto.png)
+
+### 11.4. Edición de productos
+
+Esta pantalla permite modificar los datos de un producto registrado y guardar los cambios.
+
+![Formulario de edición de productos](capturas/edicion-productos.png)
+
+Las imágenes documentan las interfaces desarrolladas durante el proyecto. Las alertas de existencias bajas y productos agotados se documentarán por separado cuando se incorpore una captura específica de esos estados.
 
 ## 12. Seguridad y limitaciones
 
