@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario | Panel principal</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">I</div>
+            <div>
+                <strong>Inventario</strong>
+                <small>Gestión de productos</small>
+            </div>
+        </div>
+
+        <p class="menu-label">MENÚ PRINCIPAL</p>
+        <a class="nav-link active" href="/">▦ &nbsp; Panel principal</a>
+        <a class="nav-link" href="{{ url_for('productos') }}">▤ &nbsp; Productos</a>
+
+        <div class="sidebar-footer">
+            Sistema de Gestión de Inventario
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">GESTIÓN DE INVENTARIO</p>
+                <h1>Panel principal</h1>
+                <p class="subtitle">
+                    Resumen general de tus productos y existencias.
+                </p>
+            </div>
+            <div class="status">
+                <span class="status-dot"></span> Sistema conectado
+            </div>
+        </header>
+
+        <section class="stats">
+            <article class="stat-card">
+                <div class="stat-icon blue">▤</div>
+                <p>Productos registrados</p>
+                <h2>{{ resumen['total_productos'] }}</h2>
+                <small>Referencias en el inventario</small>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon purple">▦</div>
+                <p>Unidades disponibles</p>
+                <h2>{{ resumen['total_unidades'] }}</h2>
+                <small>Unidades registradas</small>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon green">$</div>
+                <p>Valor del inventario</p>
+                <h2>${{ "%.2f"|format(resumen['valor_total']) }}</h2>
+                <small>Precio por cantidad disponible</small>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon orange">!</div>
+                <p>Existencias bajas</p>
+                <h2>{{ resumen['productos_bajos'] }}</h2>
+                <small>Productos con 5 unidades o menos</small>
+            </article>
+        </section>
+
+        <section class="panel" id="productos">
+            <div class="panel-heading">
+                <div>
+                    <h2>Inventario de productos</h2>
+                    <p>Consulta de los productos registrados.</p>
+                </div>
+                <span class="count">{{ productos|length }} productos</span>
+            </div>
+
+            {% if productos %}
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CÓDIGO</th>
+                            <th>PRODUCTO</th>
+                            <th>PRECIO UNITARIO</th>
+                            <th>EXISTENCIAS</th>
+                            <th>VALOR TOTAL</th>
+                            <th>ESTADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for producto in productos %}
+                        <tr>
+                            <td class="code">{{ producto['codigo'] }}</td>
+                            <td class="product-name">{{ producto['nombre'] }}</td>
+                            <td>${{ "%.2f"|format(producto['precio']) }}</td>
+                            <td>{{ producto['cantidad'] }}</td>
+                            <td>
+                                ${{ "%.2f"|format(
+                                    producto['precio'] * producto['cantidad']
+                                ) }}
+                            </td>
+                            <td>
+                                {% if producto['cantidad'] == 0 %}
+                                <span class="badge danger">Agotado</span>
+                                {% elif producto['cantidad'] <= 5 %}
+                                <span class="badge warning">Existencias bajas</span>
+                                {% else %}
+                                <span class="badge success">Disponible</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">▤</div>
+                <h3>Tu inventario está vacío</h3>
+                <p>Cuando registres productos, aparecerán aquí.</p>
+            </div>
+            {% endif %}
+        </section>
+
+        <footer class="page-footer">
+            Sistema de Gestión de Inventario · Proyecto académico
+        </footer>
+    </main>
+</body>
+</html>

@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar producto | Inventario</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">I</div>
+            <div>
+                <strong>Inventario</strong>
+                <small>Gestión de productos</small>
+            </div>
+        </div>
+        <p class="menu-label">MENÚ PRINCIPAL</p>
+        <a class="nav-link" href="{{ url_for('inicio') }}">▦ &nbsp; Panel principal</a>
+        <a class="nav-link active" href="{{ url_for('productos') }}">▤ &nbsp; Productos</a>
+        <div class="sidebar-footer">Sistema de Gestión de Inventario</div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">GESTIÓN DE INVENTARIO</p>
+                <h1>Editar producto</h1>
+                <p class="subtitle">Código: {{ producto['codigo'] }}</p>
+            </div>
+            <a class="button secondary" href="{{ url_for('productos') }}">← Volver</a>
+        </header>
+
+        {% with mensajes = get_flashed_messages(with_categories=true) %}
+            {% if mensajes %}
+                {% for categoria, mensaje in mensajes %}
+                    <div class="message {{ categoria }}">{{ mensaje }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <section class="panel form-panel">
+            <div class="panel-heading">
+                <div>
+                    <h2>Datos del producto</h2>
+                    <p>Modifica los campos necesarios y guarda los cambios.</p>
+                </div>
+            </div>
+
+            <form class="product-form" method="POST">
+                <label>
+                    Código del producto
+                    <input value="{{ producto['codigo'] }}" disabled>
+                </label>
+                <label>
+                    Nombre
+                    <input name="nombre" value="{{ producto['nombre'] }}" required maxlength="120">
+                </label>
+                <label>
+                    Precio unitario ($)
+                    <input name="precio" type="number" min="0" step="0.01"
+                           value="{{ producto['precio'] }}" required>
+                </label>
+                <label>
+                    Cantidad
+                    <input name="cantidad" type="number" min="0" step="1"
+                           value="{{ producto['cantidad'] }}" required>
+                </label>
+                <div class="form-actions">
+                    <button class="button primary" type="submit">Guardar cambios</button>
+                    <a class="button secondary" href="{{ url_for('productos') }}">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
